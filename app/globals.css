@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Brand tokens (spec §6). Use these via Tailwind classes; never raw hex in components. */
+@theme {
+  --color-snow: #FFFFFF;
+  --color-spruce: #0B2B1F;
+  --color-evergreen: #14704A;
+  --color-alpenglow: #F7B49A;
+  --color-lichen: #5B6B63;
+  --color-mist: #EEF4F0;
+  --color-line: #D5DED9;
+  --color-contour: #2C6B4F;
+  --color-contour-outer: #1E4A37;
+  --color-fog: #C9D6CF;
+  --color-mint-text: #E3F0E9;
+  --color-footer-rule: #3C8A66;
+  --color-placeholder: #C2410C;
+
+  --shadow-offset-xs: 3px 3px 0 #0B2B1F;
+  --shadow-offset-sm: 4px 4px 0 #0B2B1F;
+  --shadow-offset: 6px 6px 0 #0B2B1F;
+  --shadow-offset-lg: 8px 8px 0 #0B2B1F;
+}
+
+@theme inline {
+  --font-display: var(--font-bricolage);
+  --font-accent: var(--font-instrument-serif);
+  --font-body: var(--font-instrument-sans);
+  --font-hand: var(--font-caveat);
+  --font-sans: var(--font-instrument-sans);
+
+  /* shadcn semantic tokens, mapped to the brand */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.2);
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #0B2B1F;
+  --primary: #0B2B1F;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F7B49A;
+  --secondary-foreground: #0B2B1F;
+  --muted: #EEF4F0;
+  --muted-foreground: #5B6B63;
+  --accent: #EEF4F0;
+  --accent-foreground: #0B2B1F;
+  --destructive: #C2410C;
+  --border: #D5DED9;
+  --input: #D5DED9;
+  --ring: #14704A;
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-body scroll-smooth;
+  }
+  body {
+    @apply bg-snow text-spruce antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-evergreen;
+  }
+  [data-surface="dark"] :focus-visible {
+    @apply outline-alpenglow;
+  }
+  section[id] {
+    scroll-margin-top: 1rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
