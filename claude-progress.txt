@@ -32,6 +32,6 @@ draw-in trail motion; OG image, sitemap, robots, icon; deploy runbook docs/runbo
 Verified: 31/31 vitest, tsc, eslint, smoke PASS; Lighthouse a11y/BP/SEO 100 desktop+mobile; LCP 44ms CLS 0 (local).
 Final review (opus): 3 important + 1 re-graded minor fixed with tests; 6 minors deferred (see .superpowers ledger).
 Features: 22/24 passing. Open: deploy-001, deploy-002 (need Fodilu: GitHub repo, Vercel, DNS, real content).
-NOT COMMITTED (commit only on Fodilu's say-so).
+Committed 2026-11-17 as 6 commits on dev (e4ff43d..bc58cee). Not pushed. last-logged: bc58cee
 NEXT PRIORITY: Fodilu sends real content (cases, bio, photo, email, booking link, socials, product name, legal name),
 then commit, push, connect Vercel per docs/runbooks/deploy.md.
