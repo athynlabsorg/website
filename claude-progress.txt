@@ -1,0 +1,37 @@
+HARNESS INITIALIZED
+Project: Athyn Labs website
+Init date: 2026-11-17
+Initial commit: none yet. Fodilu's rule: commit only when he asks. Git initialized on branch `dev` with no commits.
+
+Feature list created with 24 features across 11 categories
+(setup, content, layout, sections, responsive, motion, accessibility, seo, quality, deploy).
+All features currently marked as passes: false.
+
+Context before the harness:
+- Brainstormed and designed in Paper (file "Athynlabs"). v1 was rejected as AI-looking, v2 was too playful, and v3 is the reference.
+- Spec: docs/superpowers/specs/2026-11-17-athynlabs-website-design.md. It is written and builder-checked, and AWAITING FODILU'S APPROVAL.
+- SVG artwork exported to docs/design-assets/.
+- Paper MCP weekly limit was hit on 2026-11-17 (resets ~2026-11-20).
+
+NEXT STEPS:
+1. Fodilu approves the spec.
+2. Write the implementation plan (superpowers:writing-plans).
+3. Build feature setup-001: scaffold Next.js + Tailwind + shadcn.
+
+Blocked on Fodilu for launch: real case studies, bio/photo, credentials, email, booking link, socials,
+the final AI-reviewer product name, and confirmation of the legal name.
+
+=== AGENT SESSIONS ===
+(Sessions are appended below by coding agents)
+
+--- SESSION 2026-11-17 (build) ---
+Executed docs/superpowers/plans/2026-11-17-athynlabs-website.md (11 tasks, native execution).
+Built: Next.js 16.4 + Tailwind v4 + shadcn single-page site; content/home.ts with ph() placeholders;
+production build guard (VERCEL_ENV=production fails while 24 placeholders remain); all 9 sections;
+draw-in trail motion; OG image, sitemap, robots, icon; deploy runbook docs/runbooks/deploy.md.
+Verified: 31/31 vitest, tsc, eslint, smoke PASS; Lighthouse a11y/BP/SEO 100 desktop+mobile; LCP 44ms CLS 0 (local).
+Final review (opus): 3 important + 1 re-graded minor fixed with tests; 6 minors deferred (see .superpowers ledger).
+Features: 22/24 passing. Open: deploy-001, deploy-002 (need Fodilu: GitHub repo, Vercel, DNS, real content).
+NOT COMMITTED (commit only on Fodilu's say-so).
+NEXT PRIORITY: Fodilu sends real content (cases, bio, photo, email, booking link, socials, product name, legal name),
+then commit, push, connect Vercel per docs/runbooks/deploy.md.

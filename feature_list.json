@@ -1,0 +1,340 @@
+[
+  {
+    "id": "setup-001",
+    "category": "setup",
+    "priority": 1,
+    "description": "Developer can run the Next.js app locally and see a page at localhost:3100",
+    "steps": [
+      "Run ./init.sh",
+      "curl http://localhost:3100 returns 200",
+      "npx tsc --noEmit passes",
+      "npm run build succeeds"
+    ],
+    "passes": true,
+    "verified_by": "smoke-test.sh + npm run build (2026-11-17)",
+    "notes": "Next.js App Router + TypeScript + Tailwind v4 + shadcn/ui (Button). Spec §8.1."
+  },
+  {
+    "id": "setup-002",
+    "category": "setup",
+    "priority": 2,
+    "description": "Design tokens and the four fonts are available site-wide",
+    "steps": [
+      "Open localhost:3100 in a browser",
+      "Inspect: Tailwind theme exposes snow, spruce, evergreen, alpenglow, lichen, mist, line, contour, fog colors with spec §6 hex values",
+      "Verify Bricolage Grotesque, Instrument Serif, Instrument Sans and Caveat load via next/font (network tab, no FOUT to fallback)"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools: 4 self-hosted woff2 fonts 200, tokens test (2026-11-17)",
+    "notes": "Spec §6."
+  },
+  {
+    "id": "content-001",
+    "category": "content",
+    "priority": 3,
+    "description": "All homepage copy comes from one typed content module, with placeholders flagged",
+    "steps": [
+      "Open content/home.ts (or equivalent)",
+      "Verify every section's copy lives there, not in JSX",
+      "Verify each placeholder listed in spec §8.3 is flagged { placeholder: true }"
+    ],
+    "passes": true,
+    "verified_by": "vitest tests/placeholder.test.ts + VERCEL_ENV=production npm run build exit 1 / npm run build exit 0 (2026-11-17)",
+    "notes": "Spec §8.2–8.3."
+  },
+  {
+    "id": "content-002",
+    "category": "content",
+    "priority": 4,
+    "description": "In development, placeholder content shows an orange dashed 'Placeholder' tag",
+    "steps": [
+      "Run dev server",
+      "Scroll to Selected work and About",
+      "Verify each placeholder case row and the first two credentials show the dashed 'Placeholder' tag",
+      "Verify the 'CA / incorporated' credential has no tag"
+    ],
+    "passes": true,
+    "verified_by": "prod build: Lighthouse desktop+mobile a11y/BP/SEO 100; perf trace LCP 44ms CLS 0; og/sitemap/robots/icon verified; copy-lint test; focus rings (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "content-003",
+    "category": "content",
+    "priority": 5,
+    "description": "A production build on Vercel fails while any placeholder remains",
+    "steps": [
+      "Run VERCEL_ENV=production npm run build with placeholders present → build exits non-zero and names the placeholders",
+      "Run npm run build without VERCEL_ENV=production → build succeeds",
+      "Temporarily unflag all placeholders → VERCEL_ENV=production build succeeds; revert"
+    ],
+    "passes": true,
+    "verified_by": "vitest tests/placeholder.test.ts + VERCEL_ENV=production npm run build exit 1 / npm run build exit 0 (2026-11-17)",
+    "notes": "Anti-goal enforcement. Spec §8.3."
+  },
+  {
+    "id": "nav-001",
+    "category": "layout",
+    "priority": 6,
+    "description": "Visitor sees the nav with wordmark, section links and 'Start a project' button",
+    "steps": [
+      "Open localhost:3100",
+      "Verify mountain mark + 'athyn' + italic 'labs' wordmark",
+      "Click 'Work with us', 'The lab', 'About' → page scrolls to the matching section",
+      "Verify 'Start a project' button links to the booking URL from content"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440: anchors land at section top (16px margin), CTA hrefs = booking URL, mailto ok, landmarks header/main/footer/1×h1 (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "hero-001",
+    "category": "sections",
+    "priority": 7,
+    "description": "Visitor sees the hero 'We build software that pays attention.' with the inline map chip",
+    "steps": [
+      "Open localhost:3100 at 1440px wide",
+      "Verify three-line headline with map chip between 'that' and 'pays', and 'pays attention.' in Instrument Serif italic evergreen",
+      "Verify intro paragraph, 'Start a project' button and 'Peek inside the lab' link",
+      "Click 'Peek inside the lab' → scrolls to lab section",
+      "Compare against Paper 'Home — v3' hero: close match"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440: anchors land at section top (16px margin), CTA hrefs = booking URL, mailto ok, landmarks header/main/footer/1×h1 (2026-11-17)",
+    "notes": "Artwork: docs/design-assets/map-chip.svg"
+  },
+  {
+    "id": "services-001",
+    "category": "sections",
+    "priority": 8,
+    "description": "Visitor sees the three service cards",
+    "steps": [
+      "Scroll to 'Need a hand? Here's what we're good at.'",
+      "Verify three straight cards with offset shadows and icons: AI agents for real workflows, Product engineering, Public sector projects (evergreen)",
+      "Verify card titles align at the top"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440 + 390, doubled-text wrap check (2026-11-17)",
+    "notes": "Icons in docs/design-assets/icon-*.svg"
+  },
+  {
+    "id": "work-001",
+    "category": "sections",
+    "priority": 9,
+    "description": "Visitor sees the Selected work section with three case rows",
+    "steps": [
+      "Scroll to 'Selected work.'",
+      "Verify three rows each with big result figure, sector label and description",
+      "Verify rows read from the content module"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440 + 390, doubled-text wrap check (2026-11-17)",
+    "notes": "All three are placeholders until Fodilu provides real projects."
+  },
+  {
+    "id": "process-001",
+    "category": "sections",
+    "priority": 10,
+    "description": "Visitor sees 'How a project goes' with the elevation profile and three steps",
+    "steps": [
+      "Scroll to 'How a project goes.'",
+      "Verify full-bleed elevation illustration with three waypoints",
+      "Verify Step 1 Plan it, Step 2 Build it, Step 3 Launch it labels sit under their waypoints"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440/1024/390/320, scrollW=viewport, labels inside viewport (2026-11-17)",
+    "notes": "Artwork: docs/design-assets/elevation.svg"
+  },
+  {
+    "id": "about-001",
+    "category": "sections",
+    "priority": 11,
+    "description": "Visitor sees the founder section 'The engineer you'll actually work with.'",
+    "steps": [
+      "Scroll to About",
+      "Verify portrait (or placeholder block), Caveat greeting 'hi, I'm Fodilu', heading, bio and three credential figures"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440/1024/390/320, scrollW=viewport, labels inside viewport (2026-11-17)",
+    "notes": "Photo, bio and first two credentials are placeholders."
+  },
+  {
+    "id": "lab-001",
+    "category": "sections",
+    "priority": 12,
+    "description": "Visitor sees the lab as a topographic map with three flagged products (desktop)",
+    "steps": [
+      "Open at 1440px, scroll to 'Three peaks we're climbing.'",
+      "Verify contour map, dotted trail, and flags sitting on peak centers per spec §6 coordinates",
+      "Verify Praxis ('on the ascent'), Agent Review and Toren ('at base camp') cards with descriptions",
+      "Verify Toren card sits left of its flag and no cards overlap"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440/1280/390: flags on peaks ±1px, no card overlap incl. doubled text + 20-char name (2026-11-17)",
+    "notes": "Artwork: docs/design-assets/lab-contours.svg, flag.svg. No compliance claims about Praxis."
+  },
+  {
+    "id": "contact-001",
+    "category": "sections",
+    "priority": 13,
+    "description": "Visitor can start contact from the closing section",
+    "steps": [
+      "Scroll to 'Tell us what you're building.'",
+      "Click 'Book a 30-minute chat' → opens booking URL",
+      "Verify email link is a mailto: to the content email"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440: anchors land at section top (16px margin), CTA hrefs = booking URL, mailto ok, landmarks header/main/footer/1×h1 (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "footer-001",
+    "category": "sections",
+    "priority": 14,
+    "description": "Visitor sees the footer with legal name and social links",
+    "steps": [
+      "Scroll to bottom",
+      "Verify mark, 'Athyn Labs Inc. Made with care in Canada.', LinkedIn and GitHub links from content"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440: anchors land at section top (16px margin), CTA hrefs = booking URL, mailto ok, landmarks header/main/footer/1×h1 (2026-11-17)",
+    "notes": "Legal name pending Articles of Amendment."
+  },
+  {
+    "id": "responsive-001",
+    "category": "responsive",
+    "priority": 15,
+    "description": "Hero, services, work and about read well on a 390px phone",
+    "steps": [
+      "Open at 390px width",
+      "Verify no horizontal scroll",
+      "Verify headline scales, map chip stays inline, cards and case rows stack"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440/1024/390/320, scrollW=viewport, labels inside viewport (2026-11-17)",
+    "notes": "Spec §7."
+  },
+  {
+    "id": "responsive-002",
+    "category": "responsive",
+    "priority": 16,
+    "description": "Lab section switches to stacked product cards below ~900px",
+    "steps": [
+      "Open at 390px and 768px",
+      "Verify contour map becomes a decorative banner and the three products stack as cards",
+      "Verify no overlapping text"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440/1280/390: flags on peaks ±1px, no card overlap incl. doubled text + 20-char name (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "responsive-003",
+    "category": "responsive",
+    "priority": 17,
+    "description": "Process elevation profile works on mobile",
+    "steps": [
+      "Open at 390px",
+      "Verify illustration still visible and three steps stack below it"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools 1440/1024/390/320, scrollW=viewport, labels inside viewport (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "motion-001",
+    "category": "motion",
+    "priority": 18,
+    "description": "Trail lines draw in once on scroll and respect reduced motion",
+    "steps": [
+      "Scroll to process and lab sections → lines draw in once",
+      "Enable prefers-reduced-motion → lines appear fully drawn, no animation",
+      "Hover/press buttons → subtle nudge"
+    ],
+    "passes": true,
+    "verified_by": "chrome-devtools: dashoffset 1→0 on intersect; reduced-motion leaves paths untouched; SSR HTML has no hidden state (2026-11-17)",
+    "notes": "No decorative looping animation."
+  },
+  {
+    "id": "a11y-001",
+    "category": "accessibility",
+    "priority": 19,
+    "description": "Page is keyboard and screen-reader friendly",
+    "steps": [
+      "Tab through page → visible focus on every link/button in logical order",
+      "Verify one h1 and landmarks (header, main, footer)",
+      "Verify decorative SVGs are aria-hidden",
+      "Run Lighthouse accessibility → score ≥ 95, contrast passes AA"
+    ],
+    "passes": true,
+    "verified_by": "prod build: Lighthouse desktop+mobile a11y/BP/SEO 100; perf trace LCP 44ms CLS 0; og/sitemap/robots/icon verified; copy-lint test; focus rings (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "seo-001",
+    "category": "seo",
+    "priority": 20,
+    "description": "Shared links show a proper preview and the site is indexable",
+    "steps": [
+      "curl localhost:3100 → title, meta description, og:title, og:image, twitter:card present with athynlabs.com absolute URLs",
+      "Open /opengraph-image → renders wordmark + hero line",
+      "curl /sitemap.xml and /robots.txt → valid",
+      "Verify favicon is the mountain mark"
+    ],
+    "passes": true,
+    "verified_by": "prod build: Lighthouse desktop+mobile a11y/BP/SEO 100; perf trace LCP 44ms CLS 0; og/sitemap/robots/icon verified; copy-lint test; focus rings (2026-11-17)",
+    "notes": "metadataBase https://athynlabs.com"
+  },
+  {
+    "id": "quality-001",
+    "category": "quality",
+    "priority": 21,
+    "description": "Copy contains no AI tells",
+    "steps": [
+      "grep content module and components for '—' (em dash) → none in user-facing copy",
+      "Review copy for 'not X, just Y' constructions → none"
+    ],
+    "passes": true,
+    "verified_by": "prod build: Lighthouse desktop+mobile a11y/BP/SEO 100; perf trace LCP 44ms CLS 0; og/sitemap/robots/icon verified; copy-lint test; focus rings (2026-11-17)",
+    "notes": "Anti-goal from spec §3."
+  },
+  {
+    "id": "perf-001",
+    "category": "quality",
+    "priority": 22,
+    "description": "Homepage loads fast",
+    "steps": [
+      "npm run build && npm start",
+      "Run Lighthouse performance on / → score ≥ 90 desktop"
+    ],
+    "passes": true,
+    "verified_by": "prod build: Lighthouse desktop+mobile a11y/BP/SEO 100; perf trace LCP 44ms CLS 0; og/sitemap/robots/icon verified; copy-lint test; focus rings (2026-11-17)",
+    "notes": ""
+  },
+  {
+    "id": "deploy-001",
+    "category": "deploy",
+    "priority": 23,
+    "description": "Pushing a branch creates a working Vercel preview",
+    "steps": [
+      "Fodilu creates GitHub repo, pushes, connects Vercel (agent never pushes)",
+      "Open preview URL → homepage renders with placeholder tags visible"
+    ],
+    "passes": false,
+    "verified_by": null,
+    "notes": "Requires Fodilu's manual steps."
+  },
+  {
+    "id": "deploy-002",
+    "category": "deploy",
+    "priority": 24,
+    "description": "athynlabs.com serves the live site with real content",
+    "steps": [
+      "All placeholders replaced with real content",
+      "Production deploy succeeds on Vercel",
+      "Open https://athynlabs.com → homepage renders, no placeholder tags, HTTPS valid"
+    ],
+    "passes": false,
+    "verified_by": null,
+    "notes": "Blocked on Fodilu's content (spec §10) and DNS."
+  }
+]
