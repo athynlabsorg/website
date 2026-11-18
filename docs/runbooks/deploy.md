@@ -3,7 +3,7 @@
 The agent never pushes. Steps 1–4 and 6 are Fodilu's.
 
 ## 1. GitHub
-1. Create an empty private repo (e.g. `athynlabs/website`).
+1. Repo: `github.com/athynlabsorg/website` (org `athynlabsorg`, RoadRunner11 is owner).
 2. From `~/Dev/athynlabs/website`:
    ```bash
    git remote add origin git@github.com:<you>/website.git
@@ -16,7 +16,9 @@ The agent never pushes. Steps 1–4 and 6 are Fodilu's.
 2. Settings → Environment Variables → tick **"Automatically expose System Environment Variables"**.
    This provides `VERCEL_ENV` (used by the placeholder guard) and `NEXT_PUBLIC_VERCEL_ENV`
    (hides placeholder tags only on production).
-3. Settings → Git → Production Branch: `main`.
+3. Settings → Environments → Production → branch `main` (older UI: Settings → Git).
+   Do this before the first deploy: if `dev` is the only branch, Vercel builds it as production
+   and the placeholder guard fails the build with "Production build blocked".
 
 Every push to a non-`main` branch now gets a preview URL. Placeholder tags show there on purpose.
 
